@@ -33,6 +33,21 @@ const IndexPage = () => {
     const { destinations = [] } = routeJson || {};
     const destinationsVisited = destinations.filter(({arrival}) => arrival < Date.now());
     const destinationsWithPresents = destinationsVisited.filter(({presentsDelivered}) => presentsDelivered > 0);
+    if(destinationsWithPresents.length === 0) {
+      // Create a Leaflet Market instance using Santa's LatLng location
+      const center = new L.LatLng(0,0);
+      const noSanta = new L.marker(center, {
+        icon: L.divIcon({
+          className: 'icon',
+          html: '<div class="icon-santa"></div>',
+          iconSize: 50
+        })
+      });
+      noSanta.addTo(leafletElement);
+      noSanta.bindPopup(`Santa's still at the North Pole`);
+      noSanta.openPopup();
+      return;
+    }
     const lastKnownDestination = destinationsWithPresents[destinationsWithPresents.length - 1];
   }
 
