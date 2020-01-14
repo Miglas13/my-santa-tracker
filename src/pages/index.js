@@ -30,6 +30,10 @@ const IndexPage = () => {
       console.log(`Failed to find Santa!: ${e}`);
     }
     console.log("routeJson", routeJson);
+    const { destinations = [] } = routeJson || {};
+    const destinationsVisited = destinations.filter(({arrival}) => arrival < Date.now());
+    const destinationsWithPresents = destinationsVisited.filter(({presentsDelivered}) => presentsDelivered > 0);
+    const lastKnownDestination = destinationsWithPresents[destinationsWithPresents.length - 1];
   }
 
   const mapSettings = {
